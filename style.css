@@ -21,9 +21,10 @@ header {
   border-right: 10px solid var(--cherry-color);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 10px;
   width: calc(30px + 1ch);
+  /* width for nav bar = padding (20px total) + border (10px) + one character */
   height: 100vh;
   overflow: hidden;
 }
@@ -32,6 +33,7 @@ h1 {
   text-wrap: nowrap;
   font-size: 2rem;
   color: var(--light-color);
+  display: none;
 }
 
 main {
@@ -59,12 +61,34 @@ a {
   font-size: 2rem;
 }
 
-/* --MEDIA QUERIES-- */
+/* -- MEDIA QUERIES - for nav bar -- */
 
 @media screen and (min-width: 1024px) {
+  header {
+    justify-content: space-between;
+    min-width: calc(30px + 1ch); /* not expanded nav width */
+    width: 0%; /* animation only work when both widths have the same value */
+    transition: width 1s;
+  }
+
   header:hover {
-    width: fit-content;
-    max-width: 50vw;
-    overflow: visible;
+    width: 60%; /* expanded nav width */
+  }
+
+  h1 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1::after {
+    content: "";
+    width: 0%;
+    height: 1px;
+    background-color: var(--light-color);
+    transition: width 0.5s;
+  }
+
+  header:hover h1::after {
+    width: 100%;
   }
 }
